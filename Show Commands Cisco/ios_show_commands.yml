@@ -1,0 +1,21 @@
+
+
+---
+# Playbook to run show commands on Cisco IOS devices
+- name: Run show commands on Cisco IOS devices
+  hosts: cisco_ios  # Target group of hosts from the inventory file
+  gather_facts: no  # Disable gathering facts to speed up playbook execution
+
+  tasks:
+    - name: Connect to Cisco device and run show commands
+      ios_command:  # Module to run IOS command on Cisco devices
+        commands:  # List of show commands to be executed
+          - show version
+          - show ip interface brief
+          - show ip route
+          - show vlan
+      register: show_output  # Register the output of show commands in a variable
+
+    - name: Display show command output
+      debug:  # Debug module to display variable content
+        var: show_output  # Display the output of show commands
